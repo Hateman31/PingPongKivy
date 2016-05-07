@@ -1,7 +1,6 @@
 #:kivy 1.9.0
+#:import Factory kivy.factory.Factory
 
-# подключить Factory для ScreenManager
-#Добавить экран запуска игры
 
 <PongBall>:
     size: 50, 50 
@@ -17,6 +16,7 @@
             pos:self.pos
             size:self.size
 
+#Добавить экран запуска игры
 <PongGame>:
     ball: pong_ball
     player1: player_left

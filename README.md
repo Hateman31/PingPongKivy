@@ -1,2 +1,2 @@
 # PingPongKivy
-PingPong game for playing online based on Kivy-framework
+PingPong game based on Kivy-framework

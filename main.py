@@ -83,8 +83,8 @@ class PongApp(App):
 		game = PongGame()
 		Mykeyboard = Window.request_keyboard(None, game)
 		Mykeyboard.bind(on_key_down=game.key_event)
-		game.serve_ball()
-		Clock.schedule_interval(game.update, 1.0 / 60.0)
+		#game.serve_ball()
+		#Clock.schedule_interval(game.update, 1.0 / 60.0)
 		return game
 
 

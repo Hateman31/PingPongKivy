@@ -18,48 +18,55 @@
 
 #Добавить экран запуска игры
 <PongGame>:
-    ball: pong_ball
-    player1: player_left
-    player2: player_right
+#    ball: pong_ball
+#    player1: player_left
+#    player2: player_right
+    sm: sm
     
     canvas:
         Rectangle:
             pos: self.center_x-5, 0
-            size: 10, self.height
+            size: 7, self.height
+            
     ScreenManager:
         id: sm
+        size:root.size
+        transition: Factory.get('WipeTransition')()
         Screen:
             name:'Start'
-            BoxLayout:
-                Button:
-                    text:'Start to play'
+            Button:
+                text:'Start to play'
+                on_release:sm.current='GameScreen'
         Screen:
-            name:'GameSreen'
-        Label:
-            font_size: 70  
-            center_x: root.width / 4
-            top: root.top - 50
-            text: str(root.player1.score)
-            
-        Label:
-            font_size: 70  
-            center_x: root.width * 3 / 4
-            top: root.top - 50
-            text: str(root.player2.score)
+            name:'GameScreen'
+            BoxLayout:
+                size:root.size
+                Label:
+                    font_size: 70  
+                    center_x: root.width / 4
+                    top: root.top - 50
+#                    text: str(root.player1.score)
+                    
+                Label:
+                    font_size: 70  
+                    center_x: root.width * 3 / 4
+                    top: root.top - 50
+#                    text: str(root.player2.score)
+#                
+#                PongBall:
+#                    id: pong_ball
+#                    center: self.parent.center
+#                    
+#                PongPaddle:
+#                    id: player_left
+#                    x: root.x
+#                    center_y: root.center_y
+#                    
+#                PongPaddle:
+#                    id: player_right
+#                    x: root.width-self.width
+#                    center_y: root.center_y
+#                    
         
-        PongBall:
-            id: pong_ball
-            center: self.parent.center
-            
-        PongPaddle:
-            id: player_left
-            x: root.x
-            center_y: root.center_y
-            
-        PongPaddle:
-            id: player_right
-            x: root.width-self.width
-            center_y: root.center_y
-            
-    
+        
     

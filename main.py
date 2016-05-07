@@ -12,6 +12,7 @@ from kivy.clock import Clock
 
 class PongPaddle(Widget):
 	score = NumericProperty(0)
+	velocity_y = 0
 	beta = 2
 
 	def bounce_ball(self, ball):
@@ -25,19 +26,7 @@ class PongPaddle(Widget):
 	#Заставить двигаться планку плавнее
 	#Добавить отскок от границ поля
 	def move(self,dy=1):
-		print(self.y,self.pos[1])
-		
-		if self.y > self.parent.height/2:
-			self.pos[1] = self.parent.height/2
-		if self.y < 0:
-			self.pos[1] = 0
-		
-		if self.beta < 5:
-			self.beta+=1.1
-		else:
-			self.beta = 2		
-			
-		self.pos[1] += dy*self.beta*10
+		self.pos[1] += self.velocity_y*5
 
 class PongBall(Widget):
 	velocity_x = NumericProperty(0)
@@ -59,7 +48,7 @@ class PongGame(Widget):
 
 	def update(self, dt):
 		self.ball.move()
-		#self.player1.move()
+		self.player1.move()
 
 		#bounce ball off paddles
 		self.player1.bounce_ball(self.ball)
@@ -71,10 +60,10 @@ class PongGame(Widget):
 
 		#went off a side to score point?
 		if self.ball.x < self.x:
-			#self.player2.score += 1
+			self.player2.score += 1
 			self.serve_ball(vel=(4, 0))
 		if self.ball.x > self.width:
-			#self.player1.score += 1
+			self.player1.score += 1
 			self.serve_ball(vel=(-4, 0))
 
 	def on_touch_move(self, touch):
@@ -84,11 +73,10 @@ class PongGame(Widget):
 			self.player2.center_y = touch.y
 	
 	def key_event(self, keyboard, keycode, text, modifiers):
-		#print(keycode)
 		if keycode[1]=='up':
-			self.player1.move()
+			self.player1.velocity_y = 1
 		if keycode[1]=='down':
-			self.player1.move(-1)
+			self.player1.velocity_y = -1
 
 class PongApp(App):
 	def build(self):

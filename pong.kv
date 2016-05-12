@@ -42,25 +42,26 @@
                 font_size:50
                 
         Screen:
-            size_hint:None,None
+#            size_hint:None,None
             pos_hint:{'center_x':.5,'center_y':.5}
+            pos:root.pos
             name:'GameScreen'
-            BoxLayout:
-                Label:
-                    font_size: 70  
-                    center_x: root.width / 4
-                    top: root.top - 50
+
+            Label:
+                font_size: 70  
+                center_x: root.width / 4
+                top: root.top - 50
 #                    text: str(root.player1.score)
-                    
-                Label:
-                    font_size: 70  
-                    center_x: root.width * 3 / 4
-                    top: root.top - 50
+                
+            Label:
+                font_size: 70  
+                center_x: root.width * 3 / 4
+                top: root.top - 50
 #                    text: str(root.player2.score)
 #                
-                PongBall:
-                    id: pong_ball
-                    center: self.parent.center
+            PongBall:
+                id: pong_ball
+                center: self.parent.center
 #                    
 #                PongPaddle:
 #                    id: player_left

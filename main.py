@@ -29,6 +29,7 @@ class PongPaddle(Widget):
 		self.pos[1] += self.velocity_y*5
 
 class PongBall(Widget):
+#class PongBall(BoxLayout):
 	velocity_x = NumericProperty(0)
 	velocity_y = NumericProperty(0)
 	velocity = ReferenceListProperty(velocity_x, velocity_y)

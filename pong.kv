@@ -3,11 +3,12 @@
 
 
 <PongBall>:
-    size: 50, 50 
+    size_hint: .14,.09
     canvas:
         Ellipse:
-            pos: self.pos
+            pos: 50,50
             size: self.size          
+    on_touch_down: print(self.pos)
 
 <PongPaddle>:
     size: 25, 200
@@ -16,9 +17,8 @@
             pos:self.pos
             size:self.size
 
-#Добавить экран запуска игры
 <PongGame>:
-#    ball: pong_ball
+    ball: pong_ball
 #    player1: player_left
 #    player2: player_right
     sm: sm
@@ -27,20 +27,23 @@
         Rectangle:
             pos: self.center_x-5, 0
             size: 7, self.height
-            
+        
     ScreenManager:
         id: sm
         size:root.size
         transition: Factory.get('WipeTransition')()
         Screen:
             name:'Start'
+            size_hint:.5,.2
+            pos_hint:{'center_x':.5,'center_y':.5}
             Button:
                 text:'Start to play'
                 on_release:sm.current='GameScreen'
+                font_size:50
+                
         Screen:
             name:'GameScreen'
             BoxLayout:
-                size:root.size
                 Label:
                     font_size: 70  
                     center_x: root.width / 4
@@ -53,9 +56,9 @@
                     top: root.top - 50
 #                    text: str(root.player2.score)
 #                
-#                PongBall:
-#                    id: pong_ball
-#                    center: self.parent.center
+                PongBall:
+                    id: pong_ball
+                    center: self.parent.center
 #                    
 #                PongPaddle:
 #                    id: player_left

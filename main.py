@@ -25,8 +25,9 @@ class PongPaddle(Widget):
 	
 	#Заставить двигаться планку плавнее
 	#Добавить отскок от границ поля
-	def move(self,dy=1):
+	def move(self):
 		self.pos[1] += self.velocity_y*5
+		print(self.pos)
 
 class PongBall(Widget):
 	velocity_x = NumericProperty(0)
@@ -45,6 +46,12 @@ class PongGame(Widget):
 	def serve_ball(self, vel=(4, 0)):
 		self.ball.center = self.center
 		self.ball.velocity = vel
+	
+	def serve_paddle(self):
+		self.player1.x = self.x
+		self.player1.center_y = self.center_y
+		print('player1 top: ',self.player1.top)
+		self.player1.velocity_y = 0
 
 	def update(self, dt):
 		self.ball.move()
@@ -54,29 +61,33 @@ class PongGame(Widget):
 		self.player1.bounce_ball(self.ball)
 		self.player2.bounce_ball(self.ball)
 
-		#bounce ball off bottom or top
+		#bounce ball off bottom(self.y) or top(self.top)
 		if (self.ball.y < self.y) or (self.ball.top > self.top):
 			self.ball.velocity_y *= -1
+			
+		#check collides paddle off bottom(self.y) or top(self.top)
+		if (self.player1.y <= self.y) or (self.player1.top > self.height):
+			print('self.player1.top',self.player1.top)
+			print('self.height',self.height)
+			self.player1.velocity_y *= -1
 
 		#went off a side to score point?
 		if self.ball.x < self.x:
 			self.player2.score += 1
-			self.serve_ball(vel=(4, 0))
+			self.serve_ball()
+			self.serve_paddle()
 		if self.ball.x > self.width:
 			self.player1.score += 1
 			self.serve_ball(vel=(-4, 0))
+			self.serve_paddle()
 
-	def on_touch_move(self, touch):
-		if touch.x < self.width / 3:
-			self.player1.center_y = touch.y
-		if touch.x > self.width - self.width / 3:
-			self.player2.center_y = touch.y
-	
 	def key_event(self, keyboard, keycode, text, modifiers):
 		if keycode[1]=='up':
 			self.player1.velocity_y = 1
 		if keycode[1]=='down':
 			self.player1.velocity_y = -1
+			#self.player1.velocity_y = 0
+			
 
 class PongApp(App):
 	def build(self):
